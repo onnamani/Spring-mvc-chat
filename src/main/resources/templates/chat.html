@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:h2th="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>ChatAway</title>
+    </head>
+    <body>
+        <div>
+            <h1>Chat Box</h1>
+            <div th:each="chat : ${chats}">
+                <h1 th:text="${chat.username}"></h1>
+                <p th:text="${chat.messageText}"></p>
+            </div>
+
+        </div>
+        <div>
+            <form action="#" th:action="@{/chat}" th:object="${chatObject}" method="post">
+                <div>
+                    <label for="username">Username:</label> <br>
+                    <input type="text" id="username" placeholder="obinna" autofocus th:field="*{username}">
+                </div>
+                <div>
+                    <label for="messageText">Message Text:</label> <br>
+                    <textarea name="comment" id="messageText" cols="70" rows="10"
+                    placeholder="Enter text here" th:field="*{messageText}"></textarea>
+                </div>
+                <div>
+                    <label for="messageType">Message Type:</label> <br>
+                    <select id="messageType" th:field="*{messageType}">
+                        <option th:each="option : ${allOptions}"
+                                th:value="${option}"
+                                th:text="${option}">
+                            Say
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <input type="submit">
+                </div>
+
+            </form>
+        </div>
+    </body>
+</html>
