@@ -11,8 +11,9 @@
         <div>
             <h1>Chat Box</h1>
             <div th:each="chat : ${chats}">
-                <h1 th:text="${chat.username}"></h1>
-                <p th:text="${chat.messageText}"></p>
+                <p>
+                <span th:text="${chat.username}">Username</span>:
+                    <span th:text="${chat.messageText}">Message</span></p>
             </div>
 
         </div>

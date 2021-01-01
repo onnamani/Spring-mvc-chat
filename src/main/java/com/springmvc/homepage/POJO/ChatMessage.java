@@ -1,30 +1,39 @@
 package com.springmvc.homepage.POJO;
 
 
+
 public class ChatMessage {
 
     private String username;
     private String messageText;
     private ChatForm chat;
+    private String[] bannedWords = {"silly", "idiot", "stupid"};
+    private int bannedWordCount = 0;
 
     public ChatMessage(ChatForm chat) {
         this.chat = chat;
         this.username = chat.getUsername();
-        System.out.println(chat.getUsername());
-        System.out.println(chat.getMessageText());
-        System.out.println(chat.getMessageType());
+        bannedWordCount = this.bannedWordCheck(chat);
 
-        switch (chat.getMessageType()) {
-            case "Shout":
-                this.messageText = chat.getMessageText().toUpperCase();
-                break;
+        if (this.bannedWordCount == 0) {
 
-            case "Whisper":
-                this.messageText = chat.getMessageText().toLowerCase();
-                break;
+            switch (chat.getMessageType()) {
+                case "Shout":
+                    this.messageText = chat.getMessageText().toUpperCase();
+                    break;
 
-            default:
-                this.messageText = chat.getMessageText();
+                case "Whisper":
+                    this.messageText = chat.getMessageText().toLowerCase();
+                    break;
+
+                default:
+                    this.messageText = chat.getMessageText();
+            }
+        } else {
+            String temp = this.username;
+            this.username = "system check";
+            this.messageText = temp + ", Rephrase your message as it contains inappropriate words";
+            this.bannedWordCount = 0;
         }
     }
 
@@ -34,5 +43,23 @@ public class ChatMessage {
 
     public String getMessageText() {
         return this.messageText;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setMessageText(String message) {
+        this.messageText = message;
+    }
+
+    public int bannedWordCheck(ChatForm chat) {
+
+        for (String bannedWord: this.bannedWords) {
+            if (chat.getMessageText().toLowerCase().contains(bannedWord)) {
+                this.bannedWordCount++;
+            }
+        }
+        return this.bannedWordCount;
     }
 }
