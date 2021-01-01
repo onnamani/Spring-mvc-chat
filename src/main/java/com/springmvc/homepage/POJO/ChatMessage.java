@@ -54,12 +54,12 @@ public class ChatMessage {
     }
 
     public int bannedWordCheck(ChatForm chat) {
-
+        int count = 0;
         for (String bannedWord: this.bannedWords) {
             if (chat.getMessageText().toLowerCase().contains(bannedWord)) {
-                this.bannedWordCount++;
+                count++;
             }
         }
-        return this.bannedWordCount;
+        return count;
     }
 }
