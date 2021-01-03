@@ -1,9 +1,7 @@
 package com.springmvc.homepage.POJO;
 
-
-
 public class ChatMessage {
-
+    private Integer messageId;
     private String username;
     private String messageText;
     private ChatForm chat;
@@ -37,12 +35,20 @@ public class ChatMessage {
         }
     }
 
+    public Integer getMessageId() {
+        return this.messageId;
+    }
+
     public String getUsername() {
         return this.username;
     }
 
     public String getMessageText() {
         return this.messageText;
+    }
+
+    public void setMessageId(Integer messageId) {
+        this.messageId = messageId;
     }
 
     public void setUsername(String username) {
