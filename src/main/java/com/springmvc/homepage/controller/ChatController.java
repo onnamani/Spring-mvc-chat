@@ -1,8 +1,8 @@
 package com.springmvc.homepage.controller;
 
 import com.springmvc.homepage.POJO.ChatForm;
-import com.springmvc.homepage.POJO.ChatMessage;
 import com.springmvc.homepage.service.MessageListService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,13 @@ public class ChatController {
     }
 
     @PostMapping
-    public String postChat(@ModelAttribute("chatObject") ChatForm chatObject, Model model) {
-        messageList.addChatMessage(new ChatMessage(chatObject));
+    public String postChat(Authentication authentication, @ModelAttribute("chatObject") ChatForm chatObject,
+                           Model model) {
+        chatObject.setUsername(authentication.getName());
+        messageList.insertChat(chatObject);
+        chatObject.setMessageText("");
         model.addAttribute("chats", messageList.getChatMessages());
-        chatObject.resetChatForm();
+
         return "chat";
     }
 

@@ -18,13 +18,6 @@ public class UserService {
         this.hashService = hashService;
     }
 
-//    {
-//        User user1 = getUser("onnamani");
-//        System.out.println(user1.getFirstname());
-//        System.out.println(user1.getUsername());
-//        System.out.println(user1.getPassword());
-//    }
-
     public boolean isUsernameAvailable(String username) {
         return userMapper.getUser(username) == null;
     }

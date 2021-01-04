@@ -1,37 +1,52 @@
 package com.springmvc.homepage.service;
 
-import com.springmvc.homepage.POJO.ChatMessage;
+import com.springmvc.homepage.POJO.ChatForm;
+import com.springmvc.homepage.mapper.MessageMapper;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MessageListService {
 
-    private List<String> messages;
-    private List<ChatMessage> chatMessages;
+    private MessageMapper messageMapper;
+    private String[] bannedWords = {"silly", "idiot", "stupid"};
 
-    @PostConstruct
-    public void postConstruct() {
-        this.messages = new ArrayList<>();
-        this.chatMessages = new ArrayList<>();
+    public MessageListService(MessageMapper messageMapper) {
+        this.messageMapper = messageMapper;
     }
 
-    public void addChatMessage(ChatMessage chatMessage) {
-        chatMessages.add(chatMessage);
+    public Integer insertChat(ChatForm chatForm) {
+        int bannedWordCount = bannedWordCheck(chatForm);
+
+        if (bannedWordCount == 0) {
+            switch (chatForm.getMessageType()) {
+                case "Shout":
+                    chatForm.setMessageText(chatForm.getMessageText().toUpperCase());
+                    break;
+                case "Whisper":
+                    chatForm.setMessageText(chatForm.getMessageText().toLowerCase());
+                    break;
+            }
+        } else {
+            String temp = chatForm.getUsername();
+            chatForm.setUsername("system check");
+            chatForm.setMessageText(temp + ", Rephrase your message as it contains inappropriate words");
+        }
+
+        return this.messageMapper.insertMessage(chatForm);
     }
 
-    public List<ChatMessage> getChatMessages() {
-        return this.chatMessages;
+    public List<ChatForm> getChatMessages() {
+        return this.messageMapper.getAllChatMessages();
     }
 
-    public void addMessage(String message) {
-        messages.add(message);
-    }
-
-    public List<String> getMessages() {
-        return messages;
+    public int bannedWordCheck(ChatForm chat) {
+        int count = 0;
+        for (String bannedWord : this.bannedWords) {
+            if (chat.getMessageText().toLowerCase().contains(bannedWord)) {
+                count++;
+            }
+        }
+        return count;
     }
 }
