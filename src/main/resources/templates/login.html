@@ -11,6 +11,9 @@
         <div>
             <form action="#" th:action="@{/login}" method="POST">
                 <div>
+                    <span th:text="${signupSuccess}"></span>
+                </div>
+                <div>
                     <span th:if="${param.error}">Invalid username or password</span>
                 </div>
                 <div>

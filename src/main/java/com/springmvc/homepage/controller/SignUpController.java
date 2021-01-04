@@ -5,6 +5,7 @@ import com.springmvc.homepage.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class SignUpController {
@@ -21,7 +22,8 @@ public class SignUpController {
     }
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public String postSignUp(@ModelAttribute("userObject") User userObject, Model model) {
+    public String postSignUp(@ModelAttribute("userObject") User userObject,
+                             Model model, RedirectAttributes redirectAttributes) {
         Integer userId = 0;
 
         if (userService.isUsernameAvailable(userObject.getUsername())) userId = userService.createUser(userObject);
@@ -38,7 +40,8 @@ public class SignUpController {
             return "signup";
         }
         else {
-            model.addAttribute("signupSuccess", "true");
+            redirectAttributes.addFlashAttribute("signupSuccess", "You've signed up successfully." +
+                    " Please login to continue");
             return "redirect:/login";
         }
     }
