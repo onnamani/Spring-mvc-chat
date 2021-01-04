@@ -18,6 +18,13 @@ public class UserService {
         this.hashService = hashService;
     }
 
+//    {
+//        User user1 = getUser("onnamani");
+//        System.out.println(user1.getFirstname());
+//        System.out.println(user1.getUsername());
+//        System.out.println(user1.getPassword());
+//    }
+
     public boolean isUsernameAvailable(String username) {
         return userMapper.getUser(username) == null;
     }
@@ -28,6 +35,10 @@ public class UserService {
         random.nextBytes(salt);
         String encodedSalt = Base64.getEncoder().encodeToString(salt);
         String hashedPassword = hashService.getHashedValue(user.getPassword(), encodedSalt);
+
+        user.setSalt(encodedSalt);
+        user.setPassword(hashedPassword);
+
         return userMapper.insertUser(new User(null,
                 user.getUsername(),
                 user.getSalt(),

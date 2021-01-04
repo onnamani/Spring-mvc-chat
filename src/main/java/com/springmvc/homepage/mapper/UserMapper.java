@@ -12,7 +12,7 @@ public interface UserMapper {
     User getUser(String username);
 
     @Insert("INSERT INTO USERS (username, salt, password, firstname, lastname)" +
-            "VALUE(#{username}, #{salt}, #{password}, #{firstname}, #{lastname})")
+            "VALUES(#{username}, #{salt}, #{password}, #{firstname}, #{lastname})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     Integer insertUser(User user);
 }

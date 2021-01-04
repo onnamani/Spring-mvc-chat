@@ -35,6 +35,8 @@ public class SignUpController {
         if (userId == null) model.addAttribute("signupError","Ooops Something went wrong. Please try again later");
         else model.addAttribute("signupSuccess", true);
 
+
+
         return "/signup";
     }
 }
