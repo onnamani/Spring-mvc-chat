@@ -10,6 +10,8 @@
     <body>
         <div>
             <h3>Kindly Register to signup</h3>
+            <span th:text="${signupError}"
+                  th:unless="${signupSuccess}"></span>
             <form action="#" th:action="@{/signup}" th:object="${userObject}" method="post">
                 <label for="username">username</label> <br>
                 <input type="text" id="username" th:field="*{username}" autofocus placeholder="username"> <br>

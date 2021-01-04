@@ -10,12 +10,21 @@
     <body>
         <div>
             <form action="#" th:action="@{/login}" method="POST">
+                <div>
+                    <span th:if="${param.error}">Invalid username or password</span>
+                </div>
+                <div>
+                    <span th:text="${loggedOut}"></span>
+                </div>
                 <label for="username">username: </label>
-                <input type="text" id="username" name="username" maxlength="20" required> <br>
+                <input type="text" id="username" name="username" maxlength="20" required autofocus> <br>
                 <label for="password">password: </label>
                 <input type="password" id="password" name="password" maxlength="20" required>
                 <input type="submit">
             </form>
+        </div>
+        <div>
+            <a href="/signup">Click to Signup</a>
         </div>
     </body>
 </html>

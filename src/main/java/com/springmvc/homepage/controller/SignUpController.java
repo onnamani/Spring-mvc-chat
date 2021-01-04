@@ -4,13 +4,9 @@ import com.springmvc.homepage.POJO.User;
 import com.springmvc.homepage.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/signup")
 public class SignUpController {
 
     private UserService userService;
@@ -19,24 +15,31 @@ public class SignUpController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String getSignUp(@ModelAttribute("userObject") User userObject) {
         return "signup";
     }
 
-    @PostMapping
+    @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String postSignUp(@ModelAttribute("userObject") User userObject, Model model) {
         Integer userId = 0;
 
         if (userService.isUsernameAvailable(userObject.getUsername())) userId = userService.createUser(userObject);
-        else model.addAttribute("signupError", "The username already exists. Try another one.");
+        else {
+            model.addAttribute("signupError", "The username already exists. Try another one.");
+            model.addAttribute("signupSuccess", false);
+            return "signup";
+        }
 
 
-        if (userId == null) model.addAttribute("signupError","Ooops Something went wrong. Please try again later");
-        else model.addAttribute("signupSuccess", true);
-
-
-
-        return "/signup";
+        if (userId == null) {
+            model.addAttribute("signupError", "Ooops Something went wrong. Please try again later");
+            model.addAttribute("signupSuccess", false);
+            return "signup";
+        }
+        else {
+            model.addAttribute("signupSuccess", "true");
+            return "redirect:/login";
+        }
     }
 }
