@@ -5,47 +5,57 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--        <link rel="stylesheet" href="./css/style.css">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
         <title>ChatAway</title>
     </head>
     <body>
-        <div>
-            <h1>Chat Box</h1>
-            <div th:each="chat : ${chats}">
-                <p>
-                <span th:text="${chat.username}">Username</span>:
-                    <span th:text="${chat.messageText}">Message</span></p>
+        <div class="container">
+
+            <div class="w-50 p-3 overflow-auto position-absolute top-0 start-0" style="height: 900px;">
+                <h1>Chat Box</h1>
+                <div th:each="chat : ${chats}">
+                    <p>
+                    <span th:text="${chat.username}" class="fst-italic">Username</span>:
+                        <span th:text="${chat.messageText}" class="bg-light">Message</span></p>
+                </div>
+
             </div>
+            <div class="w-25 p-3 position-absolute bottom-0" style="right: 130px;">
+                <form action="#" th:action="@{/chat}" th:object="${chatObject}" method="post">
+    <!--                <div>-->
+    <!--                    <label for="username">Username:</label> <br>-->
+    <!--                    <input type="text" id="username" placeholder="obinna" autofocus th:field="*{username}">-->
+    <!--                </div>-->
+                    <div>
+                        <label for="messageText" class="form-label">Message Text:</label> <br>
+                        <textarea name="comment" id="messageText" cols="60" rows="5"
+                        placeholder="Enter text here" th:field="*{messageText}"
+                        class="form-control-sm"></textarea>
+                    </div>
+                    <div>
+                        <label for="messageType" class="form-label">Message Type:</label> <br>
+                        <select id="messageType" th:field="*{messageType}"
+                                class="form-select form-select-sm">
+                            <option th:each="option : ${allOptions}"
+                                    th:value="${option}"
+                                    th:text="${option}">
+                                Say
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-success mt-3 mb-3">
+                    </div>
+                    <div>
+                        <a href="/logout" class="btn btn-danger">Logout</a>
+                    </div>
 
+                </form>
+            </div>
         </div>
-        <div>
-            <form action="#" th:action="@{/chat}" th:object="${chatObject}" method="post">
-<!--                <div>-->
-<!--                    <label for="username">Username:</label> <br>-->
-<!--                    <input type="text" id="username" placeholder="obinna" autofocus th:field="*{username}">-->
-<!--                </div>-->
-                <div>
-                    <label for="messageText">Message Text:</label> <br>
-                    <textarea name="comment" id="messageText" cols="70" rows="10"
-                    placeholder="Enter text here" th:field="*{messageText}"></textarea>
-                </div>
-                <div>
-                    <label for="messageType">Message Type:</label> <br>
-                    <select id="messageType" th:field="*{messageType}">
-                        <option th:each="option : ${allOptions}"
-                                th:value="${option}"
-                                th:text="${option}">
-                            Say
-                        </option>
-                    </select>
-                </div>
-                <div>
-                    <input type="submit">
-                </div>
-                <div>
-                    <a href="/logout">Logout</a>
-                </div>
-
-            </form>
-        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     </body>
 </html>

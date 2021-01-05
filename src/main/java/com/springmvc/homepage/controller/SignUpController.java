@@ -42,6 +42,7 @@ public class SignUpController {
         else {
             redirectAttributes.addFlashAttribute("signupSuccess", "You've signed up successfully." +
                     " Please login to continue");
+            redirectAttributes.addFlashAttribute("signupClick", true);
             return "redirect:/login";
         }
     }
