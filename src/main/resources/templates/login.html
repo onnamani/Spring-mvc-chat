@@ -16,14 +16,14 @@
                     <form action="#" th:action="@{/login}" method="POST">
                         <div>
                             <span th:text="${signupSuccess}"
-                                  class="text-success"></span>
+                                  class="text-success" id="success"></span>
                         </div>
                         <div>
                             <span th:if="${param.error}"
-                                  class="text-danger">Invalid username or password</span>
+                                  class="text-danger" id="error">Invalid username or password</span>
                         </div>
                         <div>
-                            <span th:text="${loggedOut}" class="text-info"></span>
+                            <span th:text="${loggedOut}" class="text-info" id="logout"></span>
                         </div>
                         <label for="username" class="form-label">username: </label>
                         <input type="text" id="username" name="username"
@@ -31,12 +31,12 @@
                         <label for="password" class="form-label">password: </label>
                         <input type="password" id="password"
                                name="password" maxlength="20" required class="form-control">
-                        <input type="submit" class="btn btn-primary mt-3">
+                        <input type="submit" class="btn btn-primary mt-3" id="login-submit">
                     </form>
                 </div>
                 <div>
                     <a href="/signup" th:if="${signupClick} == null"
-                       class="btn btn-secondary mt-2">Click to Signup</a>
+                       class="btn btn-secondary mt-2" id="back-to-signup">Click to Signup</a>
                 </div>
             </div>
         </div>
