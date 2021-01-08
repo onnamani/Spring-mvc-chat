@@ -22,6 +22,9 @@ public class SignupPage {
     @FindBy(id = "signup-submit")
     private WebElement submit;
 
+    @FindBy(id = "signupError")
+    private WebElement signupError;
+
     public SignupPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -43,6 +46,10 @@ public class SignupPage {
         this.lastname.sendKeys(lastname);
 
         this.submit.click();
+    }
+
+    public WebElement getSignupError() {
+        return this.signupError;
     }
 
 }

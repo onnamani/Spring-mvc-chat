@@ -14,7 +14,7 @@
         <div class="position-absolute top-50 start-25 m-4 p-4">
             <h3 class="text-primary">Kindly Register to signup</h3>
             <span th:text="${signupError}"
-                  th:unless="${signupSuccess}" class="text-danger"></span>
+                  th:unless="${signupSuccess}" class="text-danger" id="signupError"></span>
             <form action="#" th:action="@{/signup}" th:object="${userObject}" method="post">
                 <div class="row mb-3">
                     <label for="username" class="col-sm-3 col-form-label">username</label>

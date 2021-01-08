@@ -47,14 +47,14 @@ class HomepageApplicationTests {
 	public void signupUser() {
 		driver.get("http://localhost:" + port + "/signup");
 		signupPage.submitSignup(
-				"jsmith",
+				"josmith",
 				"12345",
 				"john",
 				"smith");
 
 		assertEquals(
 				"You've signed up successfully. Please login to continue",
-				loginPage.getFlashMessage());
+				loginPage.getSuccessMessage().getText());
 	}
 
 	@Test
@@ -99,6 +99,33 @@ class HomepageApplicationTests {
 		assertEquals("HEY YOU WHAT'S UP?", chatPage.getChatMessage().get(0).getText());
 		assertEquals("obi", chatPage.getChatUsername().get(0).getText());
 		assertEquals("ogo", chatPage.getChatUsername().get(1).getText());
+	}
+
+	@Test
+	public void invalidUserLogin() {
+		driver.get("http://localhost:" + port + "/login");
+		loginPage.login("ij", "12345");
+		assertEquals("Invalid username or password", loginPage.getErrorMessage().getText());
+	}
+//
+	@Test
+	public void unavailableUsername() {
+		driver.get("http://localhost:" + port + "/signup");
+		signupPage.submitSignup(
+				"jsmith",
+				"12345",
+				"John",
+				"Smith"
+		);
+		driver.get("http://localhost:" + port + "/signup");
+		signupPage.submitSignup(
+				"jsmith",
+				"12345",
+				"James",
+				"Sunder"
+		);
+
+		assertEquals("The username already exists. Try another one.", signupPage.getSignupError().getText());
 	}
 
 }

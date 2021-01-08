@@ -1,9 +1,11 @@
 package com.springmvc.homepage.POJOTest;
 
+import jdk.jfr.Threshold;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
 
@@ -29,6 +31,7 @@ public class LoginPage {
     private WebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
+
         PageFactory.initElements(driver, this);
     }
 
@@ -39,17 +42,12 @@ public class LoginPage {
         this.submit.click();
     }
 
-    public String getFlashMessage() {
+    public WebElement getSuccessMessage() {
+        return this.successMessage;
+    }
 
-        if (successMessage != null) {
-            return successMessage.getText();
-        } else if (errorMessage != null) {
-            return errorMessage.getText();
-        } else if (logoutMessage != null) {
-            return logoutMessage.getText();
-        }
-
-        return "";
+    public WebElement getErrorMessage() {
+        return this.errorMessage;
     }
 
 }
