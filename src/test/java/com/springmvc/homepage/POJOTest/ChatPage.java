@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class ChatPage {
 
     @FindBy(id = "messageText")
@@ -20,11 +22,15 @@ public class ChatPage {
     @FindBy(id = "chat-logout")
     private WebElement logout;
 
-    @FindBy(id = "chat-username")
-    private WebElement chatUsername;
+    @FindBy(className = "chat-username")
+    private List<WebElement> chatUsername;
 
-    @FindBy(id = "chat-message")
-    private WebElement chatMessage;
+    @FindBy(className = "chat-message")
+    private List<WebElement> chatMessage;
+
+    @FindBy(className = "chats")
+    private List<WebElement> chats;
+
 
     public ChatPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -37,11 +43,19 @@ public class ChatPage {
         this.chatSubmit.click();
     }
 
-    public String getChatUsername() {
-        return this.chatUsername.getText();
+    public List<WebElement> getChatUsername() {
+        return this.chatUsername;
     }
 
-    public String getChatMessage() {
-        return this.chatMessage.getText();
+    public List<WebElement> getChatMessage() {
+        return this.chatMessage;
+    }
+
+    public WebElement getLogout() {
+        return this.logout;
+    }
+
+    public List<WebElement> getChats() {
+        return this.chats;
     }
 }

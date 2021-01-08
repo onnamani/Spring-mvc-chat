@@ -29,7 +29,6 @@ class HomepageApplicationTests {
 	public static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
-
 	}
 
 	@AfterAll
@@ -71,7 +70,35 @@ class HomepageApplicationTests {
 		driver.get("http://localhost:" + port);
 		loginPage.login("krogers", "12345");
 		assertEquals("http://localhost:" + port + "/chat", driver.getCurrentUrl());
+	}
 
+	@Test
+	public void userChats() {
+		driver.get("http://localhost:" + port + "/signup");
+		signupPage.submitSignup(
+				"obi",
+				"12345",
+				"Obi",
+				"Nnam"
+		);
+		loginPage.login("obi", "12345");
+		chatPage.PostChat("Hey you what's up?", "Shout");
+		chatPage.getLogout().click();
+
+		driver.get("http://localhost:" + port + "/signup");
+		signupPage.submitSignup(
+				"ogo",
+				"12345",
+				"Ogo",
+				"Nnam"
+		);
+		loginPage.login("ogo", "12345");
+		chatPage.PostChat("@obi, stop shouting please", "Whisper");
+
+		assertEquals(2, chatPage.getChats().size());
+		assertEquals("HEY YOU WHAT'S UP?", chatPage.getChatMessage().get(0).getText());
+		assertEquals("obi", chatPage.getChatUsername().get(0).getText());
+		assertEquals("ogo", chatPage.getChatUsername().get(1).getText());
 	}
 
 }

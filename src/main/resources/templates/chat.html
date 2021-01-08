@@ -17,11 +17,11 @@
             <div class="w-50 p-3 overflow-auto position-absolute top-0 start-0" style="height: 900px;">
                 <h1>Chat Box</h1>
                 <div th:each="chat : ${chats}">
-                    <p>
+                    <p class="chats">
                     <span th:text="${chat.username}"
-                          class="fst-italic" id="chat-username">Username</span>:
+                          class="fst-italic chat-username">Username</span>:
                         <span th:text="${chat.messageText}"
-                              class="bg-light" id="chat-message">Message</span></p>
+                              class="bg-light chat-message">Message</span></p>
                 </div>
 
             </div>
