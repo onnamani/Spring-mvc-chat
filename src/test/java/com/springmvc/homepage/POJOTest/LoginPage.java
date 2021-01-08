@@ -52,12 +52,4 @@ public class LoginPage {
         return "";
     }
 
-    public String getLoginPageUrl(WebDriver driver) {
-        return driver.getCurrentUrl();
-    }
-
-    public WebElement getBackToSignup() {
-        return this.backToSignup;
-    }
-
 }
