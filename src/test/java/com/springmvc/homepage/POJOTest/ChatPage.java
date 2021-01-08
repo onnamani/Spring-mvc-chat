@@ -36,4 +36,12 @@ public class ChatPage {
         dropdown.selectByValue(messageType);
         this.chatSubmit.click();
     }
+
+    public String getChatUsername() {
+        return this.chatUsername.getText();
+    }
+
+    public String getChatMessage() {
+        return this.chatMessage.getText();
+    }
 }
